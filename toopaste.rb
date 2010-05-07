@@ -1,10 +1,15 @@
 #!/usr/local/bin/ruby -rubygems
-
 require 'sinatra'
 require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
 require 'syntaxi'
+require 'yaml'
+
+# load YML content
+content = File.new("config/settings.yml").read
+settings = YAML::load content
+
 
 configure :development do
   DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/toopaste.sqlite3")
@@ -23,8 +28,8 @@ class Snippet
   property :created_at, DateTime
   property :updated_at, DateTime
 
-  # validates_present :body
-  # validates_length :body, :minimum => 1
+  validates_present :body
+  validates_length :body, :minimum => 1
 
   Syntaxi.line_number_method = 'floating'
   Syntaxi.wrap_at_column = 80
@@ -41,6 +46,11 @@ end
 
 DataMapper.auto_upgrade!
 #File.open('toopaste.pid', 'w') { |f| f.write(Process.pid) }
+
+# HTTP authentication required before actual operation
+use Rack::Auth::Basic do |username, password|
+  [username, password] == [settings['username'], settings['password']]
+end
 
 # new
 get '/' do

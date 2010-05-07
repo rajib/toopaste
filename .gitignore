@@ -1,0 +1,3 @@
+config/settings.yml
+toopaste.sqlite3
+toopaste.production.sqlite3
