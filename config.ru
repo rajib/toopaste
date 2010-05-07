@@ -1,10 +1,8 @@
 require 'rubygems'
 require 'sinatra'
 
-Sinatra::Application.default_options.merge!(
-  :run => false,
-  :env => ENV['RACK_ENV']
-)
+set :run, false
+set :env, (ENV['RACK_ENV'] ? ENV['RACK_ENV'].to_sym : :production)
 
 require 'toopaste'
-run Sinatra.application
+run Sinatra::Application

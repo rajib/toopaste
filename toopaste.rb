@@ -6,7 +6,13 @@ require 'dm-validations'
 require 'dm-timestamps'
 require 'syntaxi'
 
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/toopaste.sqlite3")
+configure :development do
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/toopaste.sqlite3")
+end
+
+configure :production do
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/toopaste.production.sqlite3")
+end
 
 class Snippet
   include DataMapper::Resource
