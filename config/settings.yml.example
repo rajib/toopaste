@@ -1,2 +1,11 @@
-username: changeme
-password: changeme
+development:
+  username: changeme
+  password: changeme
+
+production:
+  username: changeme
+  password: changeme
+
+test:
+  username: changeme
+  password: changeme
