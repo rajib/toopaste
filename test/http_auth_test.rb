@@ -6,6 +6,7 @@ require 'base64'
 require 'yaml'
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'toopaste'))
 
+set :views, File.join(File.dirname(__FILE__), '..', 'views')
 set :environment, :test
 
 class ApplicationTest < Test::Unit::TestCase
@@ -26,9 +27,9 @@ class ApplicationTest < Test::Unit::TestCase
   end
 
   def test_with_proper_credentials
-    get '/', {}, {'HTTP_AUTHORIZATION'=> encode_credentials(@USERNAME, @PASSWORD)}
-    assert_equal 200, last_response.status
-    assert_equal "Paste a new code snippet below", last_response.body
+    get '/', {}, {'HTTP_AUTHORIZATION'=> encode_credentials('changeme', 'changeme')} # [:TODO] @USERNAME and @PASSWORD is returning nil
+    assert_equal 200, last_response.status                                           # need to fix it.
+    assert_match "Paste a new code snippet below:", last_response.body
   end
 
   private
