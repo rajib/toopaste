@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby -rubygems
 require 'sinatra'
 require 'dm-core'
 require 'dm-validations'
@@ -6,17 +5,16 @@ require 'dm-timestamps'
 require 'syntaxi'
 require 'yaml'
 
-# load YML content
-content = File.new("config/settings.yml").read
-settings = YAML::load content
-
-
-configure :development do
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/toopaste.sqlite3")
-end
-
-configure :production do
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/toopaste.production.sqlite3")
+configure do
+  # load YML content
+  content = File.new(File.expand_path(File.dirname(__FILE__)) + '/config/settings.yml').read
+  settings = YAML::load content
+  # check current env
+  environment = Sinatra::Application.environment
+  # set database connection
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/toopaste.#{environment}.sqlite3")
+  @USERNAME = settings["#{environment}"]["username"]
+  @PASSWORD = settings["#{environment}"]["password"]
 end
 
 class Snippet
@@ -49,7 +47,7 @@ DataMapper.auto_upgrade!
 
 # HTTP authentication required before actual operation
 use Rack::Auth::Basic do |username, password|
-  [username, password] == [settings['username'], settings['password']]
+  [username, password] == [@USERNAME, @PASSWORD]
 end
 
 # new

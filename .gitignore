@@ -1,3 +1,4 @@
 config/settings.yml
-toopaste.sqlite3
+toopaste.development.sqlite3
 toopaste.production.sqlite3
+toopaste.test.sqlite3
