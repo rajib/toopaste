@@ -63,7 +63,7 @@ post '/' do
   @snippet = Snippet.new(:title => params[:snippet_title],
                          :body  => params[:snippet_body])
   if @snippet.save
-    redirect "/#{@snippet.id}"
+    redirect url_for "/#{@snippet.id}", :full
   else
     redirect url_for '/', :full
   end

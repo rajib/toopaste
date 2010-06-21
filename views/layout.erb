@@ -2,7 +2,7 @@
 <html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
   <title><%= @title || 'Toopaste!' %></title>
-	<link rel='stylesheet' href='/css/main.css' type='text/css'>
+	<link rel='stylesheet' href='<%= url_for "/css/main.css", :full %>' type='text/css'>
 </head>
 <body>
 	<div id='header'>
