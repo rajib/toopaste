@@ -65,7 +65,7 @@ post '/' do
   if @snippet.save
     redirect "/#{@snippet.id}"
   else
-    redirect '/'
+    redirect url_for '/', :full
   end
 end
 
@@ -75,6 +75,6 @@ get '/:id' do
   if @snippet
     erb :show
   else
-    redirect '/'
+    redirect url_for '/', :full
   end
 end

@@ -7,5 +7,5 @@
      Created on <%= @snippet.created_at.strftime("%B %d, %Y at %I:%M %p") %>
   </div>
   <br/>
-  <a href="/">Create new paste!</a>
+  <a href='<%= url_for "/", :full %>'>Create new paste!</a>
 </div>
