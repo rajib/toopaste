@@ -2,8 +2,11 @@ require 'sinatra'
 require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
+require 'dm-migrations'
 require 'syntaxi'
 require 'yaml'
+gem 'emk-sinatra-url-for'
+require 'sinatra/url_for'
 
 configure do
   # load YML content
